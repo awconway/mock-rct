@@ -1,22 +1,22 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import type { Note } from "~/models/note.server";
-import { getNoteListItems } from "~/models/note.server";
+import type { Recruitment } from "~/models/recruitment.server";
+import { getRecruitmentListItems } from "~/models/recruitment.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 
 type LoaderData = {
-  noteListItems: Note[];
+  recruitmentListItems: Recruitment[];
 };
 
 export async function loader ({ request }: LoaderArgs) {
   const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItems({ userId });
-  return json({ noteListItems });
+  const recruitmentListItems = await getRecruitmentListItems({ userId });
+  return json({ recruitmentListItems });
 };
 
-export default function NotesPage() {
+export default function RecruitmentPage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
 
   return (
@@ -25,24 +25,24 @@ export default function NotesPage() {
       <main className="flex h-full bg-white">
         <div className="h-full w-80 border-r bg-gray-50">
           <Link to="new" className="block p-4 text-xl text-blue-500">
-            + New Note
+            + New Recruitment
           </Link>
 
           <hr />
 
-          {data.noteListItems.length === 0 ? (
-            <p className="p-4">No notes yet</p>
+          {data.recruitmentListItems.length === 0 ? (
+            <p className="p-4">No recruitment yet</p>
           ) : (
             <ol>
-              {data.noteListItems.map((note) => (
-                <li key={note.id}>
+              {data.recruitmentListItems.map((recruitment) => (
+                <li key={recruitment.id}>
                   <NavLink
                     className={({ isActive }) =>
                       `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
                     }
-                    to={note.id}
+                    to={recruitment.id}
                   >
-                    📝 {note.title}
+                    📝 {recruitment.code}
                   </NavLink>
                 </li>
               ))}

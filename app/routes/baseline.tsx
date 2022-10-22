@@ -1,22 +1,22 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, NavLink, Outlet, useLoaderData } from "@remix-run/react";
-import type { Note } from "~/models/note.server";
-import { getNoteListItems } from "~/models/note.server";
+import type { Baseline } from "~/models/baseline.server";
+import { getBaselineListItems } from "~/models/baseline.server";
 import { requireUserId } from "~/session.server";
 import { useUser } from "~/utils";
 
 type LoaderData = {
-  noteListItems: Note[];
+  baselineListItems: Baseline[];
 };
 
 export async function loader ({ request }: LoaderArgs) {
   const userId = await requireUserId(request);
-  const noteListItems = await getNoteListItems({ userId });
-  return json({ noteListItems });
+  const baselineListItems = await getBaselineListItems({ userId });
+  return json({ baselineListItems });
 };
 
-export default function NotesPage() {
+export default function BaselinePage() {
   const data = useLoaderData<typeof loader>() as LoaderData;
 
   return (
@@ -24,25 +24,21 @@ export default function NotesPage() {
       <Header />
       <main className="flex h-full bg-white">
         <div className="h-full w-80 border-r bg-gray-50">
+          {data.baselineListItems.length === 0 ? (
           <Link to="new" className="block p-4 text-xl text-blue-500">
-            + New Note
+            
           </Link>
-
-          <hr />
-
-          {data.noteListItems.length === 0 ? (
-            <p className="p-4">No notes yet</p>
           ) : (
             <ol>
-              {data.noteListItems.map((note) => (
-                <li key={note.id}>
+              {data.baselineListItems.map((baseline) => (
+                <li key={baseline.id}>
                   <NavLink
                     className={({ isActive }) =>
                       `block border-b p-4 text-xl ${isActive ? "bg-white" : ""}`
                     }
-                    to={note.id}
+                    to={baseline.id}
                   >
-                    📝 {note.title}
+                    📝 {baseline.code}
                   </NavLink>
                 </li>
               ))}
