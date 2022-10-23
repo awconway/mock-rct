@@ -37,8 +37,8 @@ export default function InterventionDetailsPage() {
   return (
     <div>
       <p className="py-6">Randomization code: {data.intervention.code}</p>
-      <p className="py-6">Taste rating: {data.intervention.interventionForm}</p>
-      <p className="py-6">Energy rating: {data.intervention.blinding}</p>
+      <p className="py-6">Intervention received: {data.intervention.interventionForm}</p>
+      <p className="py-6">Blinding maintained: {data.intervention.blinding}</p>
       <hr className="my-4" />
       <Form method="post" reloadDocument>
         <button
