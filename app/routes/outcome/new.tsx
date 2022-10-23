@@ -1,7 +1,7 @@
 import type { ActionFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData } from "@remix-run/react";
-import { createBaseline } from "~/models/baseline.server";
+import { createOutcome } from "~/models/outcome.server";
 import { requireUserId } from "~/session.server";
 import Radio from "../../radioButtons"
 export const action: ActionFunction = async ({ request }) => {
@@ -9,24 +9,24 @@ export const action: ActionFunction = async ({ request }) => {
 
   const formData = await request.formData();
   const code = formData.get("code");
-  const happy = formData.get("happy");
-  const smarties = formData.get("smarties");
+  const taste = formData.get("taste");
+  const energy = formData.get("energy");
   const codes = ["tz3e", "9v0m", "70i1", "l2z9", "qms3", "xfak", "h6vq", "hmo1", "rdee", "nnbz", "ttm2", "qspi", "yf1h", "nhoz", "uys3", "tfwd", "36l7", "td3n", "80pb", "bhml", "b8ew", "j67k", "3cle", "6ihx", "oaab", "nooa", "bd99", "mnsf", "w9t3", "tliq", "7fxs", "bc06", "o4o9", "3yvh", "hyzr", "kk87", "b6i0", "ny3y", "2qby", "ayp7", "t1ng", "4r4i", "35fb", "53fz", "kwxw", "ltiy", "o1x0", "6039", "6pvi", "koe1"]
   if (typeof code !== "string" || code.length === 0 || codes.includes(code) === false || codes.includes(code) === false) {
     return json({ errors: { code: "Check if the randomization code matches the code you have been assigned" } }, { status: 400 });
   }
-  if (typeof happy !== "string") {
-    return json({ errors: { happy: "You need to choose a number between 1 and 10 for both questions" } }, { status: 400 });
+  if (typeof taste !== "string") {
+    return json({ errors: { taste: "You need to choose a number between 1 and 10 for both questions" } }, { status: 400 });
   }
-  if (typeof smarties !== "string") {
-    return json({ errors: { happy: "You need to choose a number between 1 and 10 for both questions" } }, { status: 400 });
+  if (typeof energy !== "string") {
+    return json({ errors: { taste: "You need to choose a number between 1 and 10 for both questions" } }, { status: 400 });
   }
 
-  const baseline = await createBaseline({ code, happy, smarties, userId });
-  return redirect(`/baseline/${baseline.id}`);
+  const outcome = await createOutcome({ code, taste, energy, userId });
+  return redirect(`/outcome/${outcome.id}`);
 };
 
-export default function NewBaselinePage() {
+export default function NewOutcomePage() {
   const actionData = useActionData();
 
   return (
@@ -50,8 +50,8 @@ export default function NewBaselinePage() {
             className="flex-1 rounded-md border-2 border-blue-500 px-3 text-lg leading-loose"
           />
         </div>
-        <Radio name="happy" label="How happy are you right now on a scale of 1 = '😞' to 10 = '😄'?" options={[1,2,3,4,5,6,7,8,9,10]} />
-        <Radio name="smarties" label="How much do you like smarties on a scale of 1='worst candy of all time' to 10='I can't stop eating this stuff'?" options={[1,2,3,4,5,6,7,8,9,10]}/>
+        <Radio name="taste" label="How tasty were the smarties on a scale of 0 = 'worst thing I have ever tasted' to 10 = 'unbelievably good'?" options={[1,2,3,4,5,6,7,8,9,10]}/>
+        <Radio name="energy" label="How energized on a scale of 0 = 'literally falling asleep' to 10 = 'I could run a marathon right now' do you feel right now?" options={[1,2,3,4,5,6,7,8,9,10]}/>
         <div className="text-right">
           <button
             type="submit"
@@ -65,14 +65,14 @@ export default function NewBaselinePage() {
             {actionData.errors.code}
           </p>
         ) : null}
-        {actionData?.errors.happy ? (
+        {actionData?.errors.taste ? (
           <p style={{ color: "red" }}>
-            {actionData.errors.happy}
+            {actionData.errors.taste}
           </p>
         ) : null}
-        {actionData?.errors.smarties ? (
+        {actionData?.errors.energy ? (
           <p style={{ color: "red" }}>
-            {actionData.errors.smarties}
+            {actionData.errors.energy}
           </p>
         ) : null}
       </Form>

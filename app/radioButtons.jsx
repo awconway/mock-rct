@@ -1,15 +1,11 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
 
-const memoryOptions = [
-    1,2,3,4,5,6,7,8,9,10
-]
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Radio({ name, label }) {
+export default function Radio({ name, label, options }) {
     const [mem, setMem] = useState(null)
 
     return (
@@ -22,7 +18,7 @@ export default function Radio({ name, label }) {
                 value={mem} onChange={setMem} className="mt-2">
                 <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>
                 <div className="grid grid-cols-3 gap-3 sm:grid-cols-10">
-                    {memoryOptions.map((option) => (
+                    {options.map((option) => (
                         <RadioGroup.Option
                             key={option}
                             name={name}

@@ -183,17 +183,7 @@ You can add your environment variables to an `.env` file (like shown in the samp
 
     primary key (id)
   );
-  -- Create public recruitment table
-  create table public.recruitment (
-    id uuid not null default uuid_generate_v4(),
-    code text,
-    screened number,
-    created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timestamp,
-    profile_id uuid references public.profiles not null,
 
-    primary key (id)
-  );
 
 
 
