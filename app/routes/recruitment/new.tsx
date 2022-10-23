@@ -37,7 +37,7 @@ export default function NewRecruitmentPage() {
       }}
     >
       <div>
-          <span>Randomization code: </span>
+      <h2 className="text-sm font-medium">Randomization code</h2>
           <input
             name="code"
             required
@@ -46,7 +46,7 @@ export default function NewRecruitmentPage() {
           />
       </div>
       <div>
-          <span>Screened: </span>
+      <h2 className="text-sm font-medium">Screened</h2>
           <input
             name="screened"
             type="number"

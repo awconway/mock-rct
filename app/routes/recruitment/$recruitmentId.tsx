@@ -36,7 +36,7 @@ export default function RecruitmentDetailsPage() {
 
   return (
     <div>
-      <h3 className="text-2xl font-bold">Randomization code: {data.recruitment.code}</h3>
+      <p className="py-6">Randomization code: {data.recruitment.code}</p>
       <p className="py-6">Number screened: {data.recruitment.screened}</p>
       <hr className="my-4" />
       <Form method="post">

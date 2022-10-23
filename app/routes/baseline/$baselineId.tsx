@@ -36,11 +36,11 @@ export default function BaselineDetailsPage() {
 
   return (
     <div>
-      <h3 className="text-2xl font-bold">Randomization code: {data.baseline.code}</h3>
+      <p className="py-6">Randomization code: {data.baseline.code}</p>
       <p className="py-6">Happiness rating: {data.baseline.happy}</p>
       <p className="py-6">Smarties rating: {data.baseline.smarties}</p>
       <hr className="my-4" />
-      <Form method="post">
+      <Form method="post" reloadDocument>
         <button
           type="submit"
           className="rounded bg-blue-500  py-2 px-4 text-white hover:bg-blue-600 focus:bg-blue-400"
