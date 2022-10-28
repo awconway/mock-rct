@@ -5,6 +5,7 @@ export type Recruitment = {
   id: string;
   code: string;
   screened: number;
+  eligible: number;
   profile_id: string;
 };
 
@@ -20,11 +21,12 @@ export async function getRecruitmentListItems({ userId }: { userId: User["id"] }
 export async function createRecruitment({
   code,
   screened,
+  eligible,
   userId,
-}: Pick<Recruitment, "screened" | "code"> & { userId: User["id"] }) {
+}: Pick<Recruitment, "screened" | "code" | "eligible"> & { userId: User["id"] }) {
   const { data, error } = await supabase
     .from("recruitment")
-    .insert([{ code, screened, profile_id: userId }])
+    .insert([{ code, screened, eligible, profile_id: userId }])
     .single();
 
   if (!error) {
@@ -67,6 +69,7 @@ export async function getRecruitment({
       id: data.id,
       code: data.code,
       screened: data.screened,
+      eligible: data.eligible,
     };
   }
 
